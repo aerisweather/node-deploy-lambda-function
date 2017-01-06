@@ -15,7 +15,7 @@ Helper for deploying code to AWS Lambda.
 
 First, you'll need to setup a `param.json` config files for each deployment environment. For example:
 
-```json
+```javascript
 // params.staging.json
 {
   // Scripts to run, before packaging your code
