@@ -1,0 +1,12 @@
+{
+  "envFile": "s3://my-bucket/env/example.env",
+  "srcDirs": ["dist/lib", "node_modules"],
+  "lambdaFunction": "my-lambda-function",
+  "lambdaAlias": "example",
+  "lambdaRole": "arn:aws:iam::ACCOUNT_ID:role/iam-role-name",
+  "lambdaRegion": "us-east-1",
+  "build": [
+    "npm run test",
+    "npm run build"
+  ]
+}

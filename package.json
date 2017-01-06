@@ -1,0 +1,26 @@
+{
+  "name": "@aerisweather/deploy-lambda-function",
+  "version": "0.0.0",
+  "description": "Script for deploying code as a lambda function",
+  "main": "dist/deploy.js",
+  "bin": {
+    "deploy-lambda-function": "lib/deploy.js"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist; tsc"
+  },
+  "author": "Edan Schwartz <eschwartz@aerisweather.com>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@types/aws-sdk": "0.0.42",
+    "@types/node": "^6.0.58",
+    "admiral-cli": "^0.12.0",
+    "aws-sdk": "^2.7.21",
+    "dotenv": "^2.0.0",
+    "fs-extra": "^1.0.0",
+    "typescript": "^2.1.4"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "0.0.36"
+  }
+}
