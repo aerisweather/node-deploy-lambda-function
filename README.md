@@ -90,7 +90,7 @@ pipelines:
             - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
             - npm install
             - ./node_modules/.bin/deploy-lambda-function -c ./deploy/params.staging.json
-    staging:
+    development:
       - step:
           script:
             - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
@@ -124,5 +124,3 @@ pipelines:
 * Assign the IAM role to an IAM user
 * Provide IAM user credentials to Pipelines, via env vars
 * Provide npm credentials to bit Pipelines, by copying the token from your local `~/.npmrc` to the `NPM_TOKEN` env var in Pipelines
-
-
