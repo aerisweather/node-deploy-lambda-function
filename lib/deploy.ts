@@ -20,7 +20,7 @@ const Cli = <any>require('admiral-cli');
 
   // Run tests and build
   console.log('Building and testing...');
-  params.build.forEach(script => execSync(script));
+  params.build.forEach(script => execSync(script, { stdio: 'inherit' }));
   console.log('Building and testing... complete!');
 
   // Remove devDependencies from lambda build, to save on space
