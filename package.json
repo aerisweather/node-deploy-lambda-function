@@ -1,6 +1,6 @@
 {
   "name": "@aerisweather/deploy-lambda-function",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Script for deploying code as a lambda function",
   "main": "dist/deploy.js",
   "bin": {
