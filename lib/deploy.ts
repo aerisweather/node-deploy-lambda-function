@@ -37,7 +37,9 @@ const Cli = <any>require('admiral-cli');
   console.log('Archiving lambda function code....');
   const archiveFile = path.join(process.cwd(), 'lambda-function.zip');
   await archive(params.srcDirs, archiveFile);
-  console.log('Archiving lambda function code.... complete!');
+  const {size} = fs.statSync(archiveFile);
+  const sizeMb = size / (1024 * 1024);
+  console.log(`Archiving lambda function code (${sizeMb.toFixed(2)}M).... complete!`);
 
   // Restore previous node_modules
   console.log('Restoring previous node_modules...');
