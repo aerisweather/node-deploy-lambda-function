@@ -1,0 +1,18 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1483740194000",
+      "Effect": "Allow",
+      "Action": [
+        "lambda:PublishVersion",
+        "lambda:UpdateAlias",
+        "lambda:UpdateFunctionCode",
+        "lambda:UpdateFunctionConfiguration"
+      ],
+      "Resource": [
+        "arn:aws:lambda:ACCOUNT_REGION:ACCOUNT_ID:function:NAME_OF_YOUR_LAMBDA_FUNCTION"
+      ]
+    }
+  ]
+}

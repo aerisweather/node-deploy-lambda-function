@@ -14,7 +14,7 @@ Helper for deploying code to AWS Lambda.
 
 First, you'll need to setup a `param.json` config files for each deployment environment. For example:
 
-```javascript
+```json
 // params.staging.json
 {
   // List of directories to include in `zip` file
@@ -54,7 +54,7 @@ For this to work, you'll need to:
 
 # Run on LambCI's lambda-simulation container,
 # to give an environment that's close to the real deal
-image: lambci/nodejs4.3
+image: lambci/build-nodejs4.3
 
 clone:
   depth: 1
@@ -66,6 +66,7 @@ pipelines:
         script:
           # Login to NPM
           - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          - npm install -g npm
           - npm install
           - npm run build
           - npm run test
@@ -75,20 +76,29 @@ pipelines:
     master:
       - step:
           script:
-            - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-            - npm install
+            # Configure npm with your NPM_TOKEN
+            - touch .npmrc && echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
+            # Build your code
+            - npm install && npm build && npm test
+            # Deploy to lambda, using prod config
             - ./node_modules/.bin/deploy-lambda-function -c ./deploy/params.prod.json
     staging:
       - step:
           script:
-            - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-            - npm install
+            # Configure npm with your NPM_TOKEN
+            - touch .npmrc && echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
+            # Build your code
+            - npm install && npm build && npm test
+            # Deploy to lambda, using staging config
             - ./node_modules/.bin/deploy-lambda-function -c ./deploy/params.staging.json
     development:
       - step:
           script:
-            - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-            - npm install
+            # Configure npm with your NPM_TOKEN
+            - touch .npmrc && echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
+            # Build your code
+            - npm install && npm build && npm test
+            # Deploy to lambda, using dev config
             - ./node_modules/.bin/deploy-lambda-function -c ./deploy/params.dev.json
 ```
 
