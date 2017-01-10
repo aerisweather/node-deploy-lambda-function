@@ -5,7 +5,7 @@ Helper for deploying code to AWS Lambda.
 ## What does it do
 
 * **Packages** your code into a `zip` file (excludes devDependencies, to keep it small)
-* **Uploads* your code to a lambda function
+* **Uploads** your code to a lambda function
 * Loads **env vars from S3**, and applies them to your new lambda function version
 * Sets the **IAM role** of your new lambda function version
 * Points an **alias** at your new lambda function version
@@ -27,7 +27,7 @@ First, you'll need to setup a `param.json` config files for each deployment envi
   "lambdaAlias": "staging",
   // The IAM role you want to give your lambda function
   "lambdaRole": "arn:aws:iam::ACCOUNT_ID:role/my-lambda-function-staging",
-  // The region associated with your lambda function (optional)
+  // The region associated with your lambda function (optional, defaults to us-east-1)
   "lambdaRegion": "us-east-1"
 }
 ```
@@ -64,8 +64,10 @@ pipelines:
   default:
     - step:
         script:
-          # Login to NPM
-          - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          # Configure npm with your NPM_TOKEN
+          # (only required if installing from a private npm registry)
+          - touch .npmrc && echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
+          # Build and test your code
           - npm install -g npm
           - npm install
           - npm run build
@@ -77,6 +79,7 @@ pipelines:
       - step:
           script:
             # Configure npm with your NPM_TOKEN
+            # (only required if installing from a private npm registry)
             - touch .npmrc && echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
             # Build your code
             - npm install && npm build && npm test
@@ -86,6 +89,7 @@ pipelines:
       - step:
           script:
             # Configure npm with your NPM_TOKEN
+            # (only required if installing from a private npm registry)
             - touch .npmrc && echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
             # Build your code
             - npm install && npm build && npm test
@@ -95,6 +99,7 @@ pipelines:
       - step:
           script:
             # Configure npm with your NPM_TOKEN
+            # (only required if installing from a private npm registry)
             - touch .npmrc && echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
             # Build your code
             - npm install && npm build && npm test
@@ -126,4 +131,5 @@ pipelines:
 
 * Assign the IAM role to an IAM user
 * Provide IAM user credentials to Pipelines, via env vars
-* Provide npm credentials to bit Pipelines, by copying the token from your local `~/.npmrc` to the `NPM_TOKEN` env var in Pipelines
+* Provide npm credentials to Pipelines, by copying the token from your local `~/.npmrc` to the `NPM_TOKEN` env var in Pipelines
+    * (only required if installing from a private npm registry)
