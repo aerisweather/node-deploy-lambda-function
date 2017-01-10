@@ -10,7 +10,7 @@
     "build": "rm -rf ./dist; tsc"
   },
   "author": "Edan Schwartz <eschwartz@aerisweather.com>",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "dependencies": {
     "@types/aws-sdk": "0.0.42",
     "@types/node": "^6.0.58",
