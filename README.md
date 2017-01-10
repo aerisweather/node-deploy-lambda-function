@@ -109,7 +109,6 @@ pipelines:
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "Stmt1483740194000",
             "Effect": "Allow",
             "Action": [
                 "lambda:PublishVersion",
