@@ -4,7 +4,6 @@ Helper for deploying code to AWS Lambda.
 
 ## What does it do
 
-* Runs configured **build scripts** against your code
 * **Packages** your code into a `zip` file (excludes devDependencies, to keep it small)
 * **Uploads* your code to a lambda function
 * Loads **env vars from S3**, and applies them to your new lambda function version
@@ -18,11 +17,6 @@ First, you'll need to setup a `param.json` config files for each deployment envi
 ```javascript
 // params.staging.json
 {
-  // Scripts to run, before packaging your code
-  "build": [
-    "npm run test",
-    "npm run build"
-  ],
   // List of directories to include in `zip` file
   "srcDirs": ["dist/lib", "node_modules"],
   // Name of your lambda function on AWS

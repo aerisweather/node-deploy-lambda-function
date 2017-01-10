@@ -18,11 +18,6 @@ const Cli = <any>require('admiral-cli');
   const cli = parseCliParams();
   const params = require(cli.paramsFile) as IDeployParams;
 
-  // Run tests and build
-  console.log('Building and testing...');
-  params.build.forEach(script => execSync(script, { stdio: 'inherit' }));
-  console.log('Building and testing... complete!');
-
   // Remove devDependencies from lambda build, to save on space
   console.log('Removing devDependencies....');
   console.log('(keeping previous node_modules at /node_modules.bak, will restore later)');
@@ -129,7 +124,6 @@ interface IDeployParams {
   lambdaAlias: string;
   lambdaRole: string; // ARN for the iam role to associate with this lambda code version
   lambdaRegion?: string;
-  build: string[];  // build scripts to run, before deploying
 }
 
 interface ICliParams {
