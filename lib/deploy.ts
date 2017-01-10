@@ -33,8 +33,8 @@ const Cli = <any>require('admiral-cli');
   const archiveFile = path.join(process.cwd(), 'lambda-function.zip');
   await archive(params.srcDirs, archiveFile);
   const {size} = fs.statSync(archiveFile);
-  const sizeMb = size / (1024 * 1024);
-  console.log(`Archiving lambda function code (${sizeMb.toFixed(2)}M).... complete!`);
+  const archiveSizeMb = size / (1024 * 1024);
+  console.log(`Archiving lambda function code (${archiveSizeMb.toFixed(2)}MiB).... complete!`);
 
   // Restore previous node_modules
   console.log('Restoring previous node_modules...');
@@ -45,9 +45,13 @@ const Cli = <any>require('admiral-cli');
   );
   console.log('Restoring previous node_modules... complete!');
 
-  const lambda = new Lambda({ region: params.lambdaRegion || 'us-east-1' });
+  // Check that archive is less than 50MiB
+  if (archiveSizeMb >= 50) {
+    throw new Error(`Unable to deploy code to lambda: archive must be less than 50M (actually ${archiveSizeMb.toFixed(2)}MiB)`);
+  }
 
   // Update the function code
+  const lambda = new Lambda({ region: params.lambdaRegion || 'us-east-1' });
   console.log('Updating lambda function code...');
   const {Version} = await new Promise<Lambda.Types.FunctionConfiguration>((onRes, onErr) => {
     lambda.updateFunctionCode({
