@@ -10,11 +10,19 @@ Helper for deploying code to AWS Lambda.
 * Sets the **IAM role** of your new lambda function version
 * Points an **alias** at your new lambda function version
 
+## Install
+
+Install via npm:
+
+```
+npm install --save-dev @aerisweather/deploy-lambda-function
+```
+
 ## Usage
 
 First, you'll need to setup a `param.json` config files for each deployment environment. For example:
 
-```json
+```js
 // params.staging.json
 {
   // List of directories to include in `zip` file
