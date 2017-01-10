@@ -1,4 +1,4 @@
-# deploy-lambda-function
+# @aerisweather/deploy-lambda-function
 
 Helper for deploying code to AWS Lambda.
 
