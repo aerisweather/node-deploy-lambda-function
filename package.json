@@ -1,6 +1,6 @@
 {
   "name": "@aerisweather/deploy-lambda-function",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Script for deploying code as a lambda function",
   "main": "dist/deploy.js",
   "bin": {
@@ -18,9 +18,7 @@
     "aws-sdk": "^2.7.21",
     "dotenv": "^2.0.0",
     "fs-extra": "^1.0.0",
-    "typescript": "^2.1.4"
-  },
-  "devDependencies": {
+    "typescript": "^2.1.4",
     "@types/fs-extra": "0.0.36"
   }
 }
