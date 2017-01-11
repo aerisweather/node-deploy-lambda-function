@@ -53,10 +53,12 @@ const Cli = <any>require('admiral-cli');
   // Update the function code
   const lambda = new Lambda({ region: params.lambdaRegion || 'us-east-1' });
   console.log('Updating lambda function code...');
-  const {Version} = await new Promise<Lambda.Types.FunctionConfiguration>((onRes, onErr) => {
+  await new Promise((onRes, onErr) => {
     lambda.updateFunctionCode({
       FunctionName: params.lambdaFunction,
-      Publish: true,
+      // We're going to wait to publish until AFTER config is updated.
+      // otherwise, config will be applied to $LATEST, but not to our new version
+      Publish: false,
       ZipFile: fs.readFileSync(archiveFile)
     }, (err, data) => err ? onErr(err) : onRes(data));
   });
@@ -77,6 +79,15 @@ const Cli = <any>require('admiral-cli');
     }, err => err ? onErr(err) : onRes());
   });
   console.log('Updating function configuration... complete!');
+
+  // Publish the new version
+  console.log('Publishing...');
+  const {Version} = await new Promise<Lambda.Types.FunctionConfiguration>((onRes, onErr) => {
+    lambda.publishVersion({
+      FunctionName: params.lambdaFunction
+    }, (err, res) => err ? onErr(err) : onRes(res))
+  });
+  console.log(`Publishing version "${Version}"... complete!`);
 
   // Update the alias to point at our new version
   console.log(`Pointing ${params.lambdaAlias} --> ${Version}...`);
