@@ -1,3 +1,8 @@
+# v1.1.1
+
+* Fix for updating environment variables
+  Was updating $LATEST, but updates were not applied to the published version.
+
 # v1.1.0
 
 * **Do not run `build` scripts**, specified in params.json
