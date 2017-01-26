@@ -5,6 +5,8 @@
     "sourceMap": true,
     "moduleResolution": "node",
     "noImplicitAny": true,
+    "outDir": "dist",
+    "declaration": true,
     "lib":["es6", "scripthost", "dom", "es2016.array.include"]
   },
   "exclude": [

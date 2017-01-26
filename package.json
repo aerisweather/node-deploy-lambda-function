@@ -2,9 +2,10 @@
   "name": "@aerisweather/deploy-lambda-function",
   "version": "1.1.1",
   "description": "Script for deploying code as a lambda function",
-  "main": "dist/deploy.js",
+  "main": "dist/deployLambdaFunction.js",
+  "types": "dist/deployLambdaFunction.d.ts",
   "bin": {
-    "deploy-lambda-function": "lib/deploy.js"
+    "deploy-lambda-function": "bin/deploy-lambda-function.js"
   },
   "scripts": {
     "build": "rm -rf ./dist; tsc"

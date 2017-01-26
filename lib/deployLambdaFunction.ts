@@ -10,14 +10,7 @@ Update the function code, with a new version
 Update the function configuration, with the new env vars
 Point that prod/staging/dev alias at the new version
  */
-
-const Cli = <any>require('admiral-cli');
-
-(async () => {
-  // Parse the config
-  const cli = parseCliParams();
-  const params = require(cli.paramsFile) as IDeployParams;
-
+async function deployLambdaFunction(params:IDeployParams) {
   // Remove devDependencies from lambda build, to save on space
   console.log('Removing devDependencies....');
   console.log('(keeping previous node_modules at /node_modules.bak, will restore later)');
@@ -27,6 +20,10 @@ const Cli = <any>require('admiral-cli');
   );
   execSync('npm prune --production');
   console.log('Removing devDependencies... complete!');
+
+  console.log('De-duping node_modules...');
+  execSync('npm dedupe');
+  console.log('De-duping node_modules... complete!');
 
   // Create the lambda function code
   console.log('Archiving lambda function code....');
@@ -99,11 +96,9 @@ const Cli = <any>require('admiral-cli');
     }, err => err ? onErr(err) : onRes());
   });
   console.log(`Pointing ${params.lambdaAlias} --> ${Version}... complete!`);
-})()
-  .catch(err => {
-    console.error(err.stack);
-    process.exit(1)
-  });
+}
+export default deployLambdaFunction;
+
 
 async function moveDir(src:string, dst:string) {
   await new Promise((onRes, onErr) => {
@@ -117,30 +112,12 @@ async function archive(srcDirs:string[], destFile:string) {
   });
 }
 
-function parseCliParams(): ICliParams {
-  const cli = new Cli()
-    .option({
-      name: 'paramsFile',
-      description: 'Location of params.json file',
-      type: 'path',
-      shortFlag: '-c',
-      longFlag: '--config',
-      length: 1,
-      required: true
-    });
 
-  return cli.parse() as ICliParams;
-}
-
-interface IDeployParams {
+export interface IDeployParams {
   envFile: string; // location of .env file on s3
   srcDirs: string[];
   lambdaFunction: string;
   lambdaAlias: string;
   lambdaRole: string; // ARN for the iam role to associate with this lambda code version
   lambdaRegion?: string;
-}
-
-interface ICliParams {
-  paramsFile: string;
 }
