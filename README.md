@@ -46,6 +46,23 @@ To deploy to that environment, run:
 node_modules/.bin/deploy-lambda-function -c ./params.staging.json
 ```
 
+### Programmatic Usage
+
+You can also use this library programmatically, via a node script:
+
+```javascript
+const deployLambdaFunction = require('@aerisweather/deploy-lambda-function').default;
+
+deployLambdaFunction({
+  srcDirs: ['dist/lib', 'node_modules'],
+  lambdaFunction: 'my-lambda-function',
+  envFile: 's3://my-bucket/env/staging.env',
+  lambdaAlias: 'staging',
+  lambdaRole: 'arn:aws:iam::ACCOUNT_ID:role/my-lambda-function-staging',
+  lambdaRegion: 'us-east-1'
+})
+```
+
 
 ## Example: BitBucket Pipelines
 
