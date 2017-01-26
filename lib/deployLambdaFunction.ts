@@ -21,10 +21,6 @@ async function deployLambdaFunction(params:IDeployParams) {
   execSync('npm prune --production');
   console.log('Removing devDependencies... complete!');
 
-  console.log('De-duping node_modules...');
-  execSync('npm dedupe');
-  console.log('De-duping node_modules... complete!');
-
   // Create the lambda function code
   console.log('Archiving lambda function code....');
   const archiveFile = path.join(process.cwd(), 'lambda-function.zip');
