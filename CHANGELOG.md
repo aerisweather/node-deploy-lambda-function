@@ -1,3 +1,7 @@
+# v1.2.0
+
+* Allow programmatic usage of `deployLambdaFunction`
+
 # v1.1.1
 
 * Fix for updating environment variables
