@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const deployLambdaFunction = require('@aerisweather/deploy-lambda-function').default;
 const Cli = require('admiral-cli');
 
