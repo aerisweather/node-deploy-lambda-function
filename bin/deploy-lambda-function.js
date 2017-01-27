@@ -17,3 +17,12 @@ const paramsFile = new Cli()
 
 const params = require(paramsFile);
 
+deployLambdaFunction(params)
+  .then(
+    () => process.exit(0),
+    (err) => {
+        console.error(err.stack);
+        process.exit(1);
+    }
+  );
+
