@@ -1,3 +1,7 @@
+# v1.2.2
+
+* Fix binary file (add missing shebang)
+
 # v1.2.1
 
 * Fix binary file (was not doing anything).
