@@ -1,3 +1,7 @@
+# v1.2.1
+
+* Fix binary file (was not doing anything).
+
 # v1.2.0
 
 * Allow programmatic usage of `deployLambdaFunction`
