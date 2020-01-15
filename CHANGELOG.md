@@ -1,3 +1,8 @@
+# v1.3.0
+
+* Upgraded to Node.js v12 and all dependencies
+* Upgraded max buffer size.
+
 # v1.2.2
 
 * Fix binary file (add missing shebang)
