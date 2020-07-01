@@ -1,3 +1,8 @@
+# v1.4.0
+
+* Removed required envFile, that can be optional now so if something is already set in our environment we can just 
+  use that.
+
 # v1.3.0
 
 * Upgraded to Node.js v12 and all dependencies
