@@ -55,6 +55,11 @@ async function deployLambdaFunction(params: IDeployParams) {
             ZipFile: fs.readFileSync(archiveFile)
         }, (err, data) => err ? onErr(err) : onRes(data));
     });
+	await new Promise((onRes, onErr) => {
+		lambda.waitFor('functionUpdated', {
+			FunctionName: params.lambdaFunction,
+		}, (err, data) => err ? onErr(err) : onRes(data));
+	})
     fs.removeSync(archiveFile);
     console.log('Updating lambda function code... complete!');
 
@@ -75,6 +80,11 @@ async function deployLambdaFunction(params: IDeployParams) {
     await new Promise((onRes, onErr) => {
         lambda.updateFunctionConfiguration(lambdaConfig, (err: Error) => err ? onErr(err) : onRes());
     });
+	await new Promise((onRes, onErr) => {
+		lambda.waitFor('functionUpdated', {
+			FunctionName: params.lambdaFunction,
+		}, (err, data) => err ? onErr(err) : onRes(data));
+	})
     console.log('Updating function configuration... complete!');
 
     // Publish the new version
@@ -84,6 +94,11 @@ async function deployLambdaFunction(params: IDeployParams) {
             FunctionName: params.lambdaFunction
         }, (err: Error, res: any) => err ? onErr(err) : onRes(res))
     });
+	await new Promise((onRes, onErr) => {
+		lambda.waitFor('functionUpdated', {
+			FunctionName: params.lambdaFunction,
+		}, (err, data) => err ? onErr(err) : onRes(data));
+	})
     console.log(`Publishing version "${Version}"... complete!`);
 
     // Update the alias to point at our new version

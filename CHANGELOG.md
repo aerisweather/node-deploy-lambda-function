@@ -1,3 +1,7 @@
+# v1.4.1
+
+* Fix issue with Lambda not waiting to be ready before returning anymore
+
 # v1.4.0
 
 * Removed required envFile, that can be optional now so if something is already set in our environment we can just 
